@@ -30,7 +30,7 @@ namespace WebApi
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", o =>
                 {
-                    o.Authority = "https://localhost:44387";
+                    o.Authority = "https://localhost:5001";
                     o.RequireHttpsMetadata = true;
                     o.Audience = "API";
                 });
