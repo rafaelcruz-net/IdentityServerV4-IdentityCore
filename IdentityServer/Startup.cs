@@ -28,7 +28,8 @@ namespace IdentityServer
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                                                        options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -38,7 +39,7 @@ namespace IdentityServer
             services.AddIdentityServer()
                     .AddDeveloperSigningCredential()
                     .AddAspNetIdentity<ApplicationUser>()
-                    .AddConfigurationStore(options => { options.ConfigureDbContext = builder =>  builder.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"),  db => db.MigrationsAssembly(migrationsAssembly)); })
+                    .AddConfigurationStore(options => { options.ConfigureDbContext = builder => builder.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"), db => db.MigrationsAssembly(migrationsAssembly)); })
                     .AddOperationalStore(options => { options.ConfigureDbContext = builder => builder.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"), db => db.MigrationsAssembly(migrationsAssembly)); });
 
         }

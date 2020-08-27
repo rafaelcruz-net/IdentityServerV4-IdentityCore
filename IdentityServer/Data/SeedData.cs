@@ -14,11 +14,8 @@ namespace IdentityServer.Data
     {
         public static void EnsureSeedData(IServiceProvider serviceProvider)
         {
-            Console.WriteLine("Seeding database...");
             PerformMigrations(serviceProvider);
-
             EnsureSeedData(serviceProvider.GetRequiredService<ConfigurationDbContext>());
-            Console.WriteLine("Done seeding database.");
         }
 
         private static void PerformMigrations(IServiceProvider serviceProvider)
@@ -32,45 +29,32 @@ namespace IdentityServer.Data
         {
             if (!context.Clients.Any())
             {
-                Console.WriteLine("Clients being populated");
                 foreach (var client in IdentityServerConfiguration.GetClientScope().ToList())
                 {
                     context.Clients.Add(client.ToEntity());
                 }
                 context.SaveChanges();
             }
-            else
-            {
-                Console.WriteLine("Clients already populated");
-            }
+           
 
             if (!context.IdentityResources.Any())
             {
-                Console.WriteLine("IdentityResources being populated");
                 foreach (var resource in IdentityServerConfiguration.GetIdentityResources().ToList())
                 {
                     context.IdentityResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
             }
-            else
-            {
-                Console.WriteLine("IdentityResources already populated");
-            }
-
+           
             if (!context.ApiResources.Any())
             {
-                Console.WriteLine("ApiResources being populated");
                 foreach (var resource in IdentityServerConfiguration.GetApiResources().ToList())
                 {
                     context.ApiResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
             }
-            else
-            {
-                Console.WriteLine("ApiResources already populated");
-            }
+           
         }
     }
 }
